@@ -1,7 +1,8 @@
 const root = document.getElementById("root");
     const apiEndPoint = prompt("Enter API endpoint");
+    
+    const defaultEndPoint = "https://myfakeapi.com/api/users/";    // dummy object data structure
 
-    // dummy object data structure
     const textobj = {
       name: "John Doe",
       age: 30,
@@ -47,6 +48,7 @@ const root = document.getElementById("root");
           propertyTypes[property] = getObjectPropertyTypes(obj[property]);
         } else if (propertyType === "object" && Array.isArray(obj[property])) {
           propertyTypes[property] = getArrayValueTypes(obj[property], check);
+        //   console.log(propertyTypes[property])
         }
       }
 
@@ -60,10 +62,12 @@ const root = document.getElementById("root");
       for (const value of array) {
         const valueType = typeof value;
         if (valueType === "object" && !Array.isArray(valueType)) {
+            console.log(getObjectPropertyTypes(value))
           arrayValueTypes.push(getObjectPropertyTypes(value));
         }
         arrayValueTypes.push(valueType);
       }
+
 
       return check ? arrayValueTypes : arrayValueTypes[0];
     }
@@ -105,17 +109,35 @@ const root = document.getElementById("root");
       }
     }
 
-    fetch(apiEndPoint)
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        console.log(
-          JSON.stringify(getDataType(json), null, 2).replaceAll('"', "").replaceAll(",",";")
-        );
-        root.innerText = JSON.stringify(getDataType(json), null, 10).replaceAll(
-          '"',
-          ""
-        ).replaceAll(",",";");
+    const getTypes = (data, withkey = true)=>{
+    let types = [];
+    for(let key in data){
+        if(Array.isArray(data[key])){
+            types.push(key + ' : ' + '{'+getTypes(data[key][0])+'}[]');
+            continue;
+        }else if(typeof data[key] === 'object'){
+            types.push(key + ' : ' + '('+getTypes(data[key], false)+')');
+            continue;
+        }
+        types.push(withkey ? (key + ' : ' + typeof data[key]) : typeof data[key]);
+    }
+    return types;
+}
+
+fetch(apiEndPoint || defaultEndPoint)
+.then((response) => response.json())
+.then((json) => {
+    const dd = JSON.stringify(getTypes(json));
+    console.log(JSON.stringify(getTypes(json), null, 2));
+    document.getElementById('root').innerText = JSON.parse(dd)
+        // console.log(
+        //   JSON.stringify(getDataType(json), null, 2).replaceAll('"', "").replaceAll(",",";")
+        // );
+        // root.innerText = JSON.stringify(getDataType(json), null, 10).replaceAll(
+        //   '"',
+        //   ""
+        // ).replaceAll(",",";");
+
       });
 
     // console.log(getDataType("hello world"));
