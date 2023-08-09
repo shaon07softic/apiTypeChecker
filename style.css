@@ -1,0 +1,9 @@
+* {
+  font-family: "Fira Sans", sans-serif;
+}
+
+#root {
+  background: black;
+  color: white;
+  padding: 2rem;
+}

@@ -110,12 +110,12 @@ const root = document.getElementById("root");
       .then((json) => {
         console.log(json);
         console.log(
-          JSON.stringify(getDataType(json), null, 2).replaceAll('"', "")
+          JSON.stringify(getDataType(json), null, 2).replaceAll('"', "").replaceAll(",",";")
         );
         root.innerText = JSON.stringify(getDataType(json), null, 10).replaceAll(
           '"',
           ""
-        );
+        ).replaceAll(",",";");
       });
 
     // console.log(getDataType("hello world"));
