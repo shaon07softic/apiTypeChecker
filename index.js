@@ -105,7 +105,7 @@ const root = document.getElementById("root");
       }
     }
 
-    fetch("https://dummyjson.com/products")
+    fetch(apiEndPoint)
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
