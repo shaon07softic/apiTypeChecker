@@ -3,18 +3,36 @@ const rootWrapper = document.getElementById("root-wrapper");
 const sendBtn = document.getElementById("sendBtn");
 const hideBtn = document.getElementById("hideBtn");
 const copyBtn = document.getElementById("copyBtn");
-
+const selectBox = document.getElementById("selectBox");
+const mainUrl = document.getElementById("mainUrl");
+const authKey = document.getElementById("authKey");
+const payload = document.getElementById("payload");
 
 hideBtn.onclick = () => {
   rootWrapper.style.display = "none";
-}
+};
 
 sendBtn.onclick = () => {
   rootWrapper.style.display = "block";
-}
-// const apiEndPoint = prompt("Enter API endpoint");
+};
 
-const defaultEndPoint = "https://myfakeapi.com/api/users/"; // dummy object data structure
+selectBox.onchange = (event) => {
+  selectBox.value = event.target.value;
+};
+
+
+mainUrl.onchange = (event) => {
+  apiEndPoint = event.target.value;
+}
+
+const defaultEndPoint = mainUrl.value || "https://myfakeapi.com/api/users/"; // dummy object data structure
+const payloadData = {
+  method: selectBox.value || "GET",
+  headers: {
+    "Content-Type": "application/json",
+    authorization: authKey.value,
+  },
+};
 
 const textobj = {
   name: "John Doe",
@@ -136,19 +154,27 @@ const getTypes = (data, withkey = true) => {
   return types;
 };
 
-fetch(defaultEndPoint)
-  .then((response) => response.json())
-  .then((json) => {
-    const dd = JSON.stringify(getTypes(json));
-    console.log(JSON.stringify(getTypes(json), null, 2));
-    document.getElementById("root").innerText = JSON.parse(dd);
-    // console.log(
-    //   JSON.stringify(getDataType(json), null, 2).replaceAll('"', "").replaceAll(",",";")
-    // );
-    // root.innerText = JSON.stringify(getDataType(json), null, 10).replaceAll(
-    //   '"',
-    //   ""
-    // ).replaceAll(",",";");
-  });
+sendBtn.onclick = () => {
+  
+  fetch(mainUrl.value || defaultEndPoint, payloadData)
+    .then((response) => response.json())
+    .then((json) => {
+      rootWrapper.style.display = "block";
+
+      // version 2
+      // const dd = JSON.stringify(getTypes(json));
+      // console.log(JSON.stringify(getTypes(json), null, 2));
+      // document.getElementById("root").innerText = JSON.parse(dd);
+
+      // version 1
+      console.log(
+        JSON.stringify(getDataType(json), null, 2).replaceAll('"', "").replaceAll(",",";")
+      );
+      root.innerText = JSON.stringify(getDataType(json), null, 10).replaceAll(
+        '"',
+        ""
+      ).replaceAll(",",";").trim();
+    });
+};
 
 // console.log(getDataType("hello world"));

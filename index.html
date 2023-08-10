@@ -22,27 +22,22 @@
     <div class="container p-5">
       <!-- search bar section -->
       <div class="input-group mb-3">
-        <div class="dropdown">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            GET
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">GET</a></li>
-            <li><a class="dropdown-item" href="#">POST</a></li>
-            <li><a class="dropdown-item" href="#">PUT</a></li>
-            <li><a class="dropdown-item" href="#">DELETE</a></li>
-          </ul>
-        </div>
+        <select
+          class="form-select selectBox"
+          aria-label="Default select example"
+          id="selectBox"
+        >
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="DELETE">DELETE</option>
+        </select>
         <input
           type="text"
           class="form-control"
           placeholder="URL"
           aria-label="Recipient's username"
+          id="mainUrl"
           aria-describedby="button-addon2"
         />
         <button class="btn btn-outline-info" type="button" id="sendBtn">
@@ -77,6 +72,7 @@
             placeholder="Bearer"
             aria-label="Username"
             aria-describedby="basic-addon1"
+            id="authKey"
           />
         </div>
       </div>
@@ -86,6 +82,7 @@
         <textarea
           class="form-control w-100 text-area"
           aria-label="With textarea"
+          id="payload"
         ></textarea>
       </div>
     </div>

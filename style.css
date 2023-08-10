@@ -2,6 +2,10 @@
   font-family: "Fira Sans", sans-serif;
 }
 
+#root-wrapper {
+  display: none;
+}
+
 #root {
   background: black;
   color: white;
@@ -10,6 +14,10 @@
 .copy-btn {
   top: 1rem;
   right: 1rem;
+}
+
+.selectBox {
+  flex: 0.1 !important;
 }
 
 body {
