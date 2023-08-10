@@ -7,3 +7,29 @@
   color: white;
   padding: 2rem;
 }
+.copy-btn {
+  top: 1rem;
+  right: 1rem;
+}
+
+body {
+  background: #2b2b2b !important;
+}
+
+.method-list li {
+  color: #b8b8b8;
+  list-style: none;
+  cursor: pointer;
+  transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.method-list li:hover {
+  color: #ff6c37;
+}
+
+label {
+  color: white;
+}
+
+.text-area {
+  min-height: 10rem !important;
+}
