@@ -1,4 +1,5 @@
 const root = document.getElementById("root");
+const editor = document.getElementById("my-div");
 const rootWrapper = document.getElementById("root-wrapper");
 const sendBtn = document.getElementById("sendBtn");
 const hideBtn = document.getElementById("hideBtn");
@@ -8,15 +9,13 @@ const mainUrl = document.getElementById("mainUrl");
 const authKey = document.getElementById("authKey");
 const payload = document.getElementById("payload");
 
-let isLoading = false;
-
 hideBtn.onclick = () => {
   rootWrapper.style.display = "none";
+  window.location.reload()
 };
 
 sendBtn.onclick = () => {
   rootWrapper.style.display = "block";
-  
 };
 
 selectBox.onchange = (event) => {
@@ -27,7 +26,8 @@ mainUrl.onchange = (event) => {
   apiEndPoint = event.target.value;
 };
 
-const defaultEndPoint = mainUrl.value || "https://jsonplaceholder.typicode.com/users"; // dummy object data structure
+const defaultEndPoint =
+  mainUrl.value || "https://jsonplaceholder.typicode.com/users"; // dummy object data structure
 const payloadData = {
   method: selectBox.value || "GET",
   headers: {
@@ -157,20 +157,19 @@ const getTypes = (data, withkey = true) => {
 
 function copyToClipboard(text) {
   var copyText = text.innerText;
-    navigator.clipboard.writeText(copyText).then(() => {
-        // Alert the user that the action took place.
-        // Nobody likes hidden stuff being done under the hood!
-        // alert("Copied to clipboard");
-    });
+  navigator.clipboard.writeText(copyText).then(() => {
+    // Alert the user that the action took place.
+    // Nobody likes hidden stuff being done under the hood!
+    // alert("Copied to clipboard");
+  });
 }
 
 copyBtn.onclick = () => {
-  copyToClipboard(root);
+  copyToClipboard(editor);
 };
 
 sendBtn.onclick = () => {
   sendBtn.innerText = "Sending";
-
 
   fetch(mainUrl.value || defaultEndPoint, payloadData)
     .then((response) => response.json())
@@ -178,21 +177,31 @@ sendBtn.onclick = () => {
       rootWrapper.style.display = "block";
       sendBtn.innerText = "Send";
 
+      CodeMirror(document.querySelector("#my-div"), {
+        lineNumbers: true,
+        tabSize: 2,
+        value: JSON.stringify(getDataType(json), null, 2)
+        .replaceAll('"', "")
+        .replaceAll(",", ";"),
+        mode: 'javascript',
+      theme: 'monokai'
+      });
+
       // version 2
       // const dd = JSON.stringify(getTypes(json));
       // console.log(JSON.stringify(getTypes(json), null, 2));
-      // document.getElementById("root").innerText = JSON.parse(dd);
+      // document.getElementById("my-div").innerText = JSON.parse(dd);
 
       // version 1
-      console.log(
-        JSON.stringify(getDataType(json), null, 2)
-          .replaceAll('"', "")
-          .replaceAll(",", ";")
-      );
-      root.innerText = JSON.stringify(getDataType(json), null, 10)
-        .replaceAll('"', "")
-        .replaceAll(",", ";")
-        .trim();
+      // console.log(
+      //   JSON.stringify(getDataType(json), null, 2)
+      //     .replaceAll('"', "")
+      //     .replaceAll(",", ";")
+      // );
+      // root.innerText = JSON.stringify(getDataType(json), null, 10)
+      //   .replaceAll('"', "")
+      //   .replaceAll(",", ";")
+      //   .trim();
     });
 };
 
