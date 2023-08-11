@@ -165,7 +165,7 @@ function copyToClipboard(text) {
 }
 
 copyBtn.onclick = () => {
-  copyToClipboard(editor);
+  copyToClipboard(root);
 };
 
 sendBtn.onclick = () => {
@@ -198,10 +198,10 @@ sendBtn.onclick = () => {
       //     .replaceAll('"', "")
       //     .replaceAll(",", ";")
       // );
-      // root.innerText = JSON.stringify(getDataType(json), null, 10)
-      //   .replaceAll('"', "")
-      //   .replaceAll(",", ";")
-      //   .trim();
+      root.innerText = JSON.stringify(getDataType(json), null, 10)
+        .replaceAll('"', "")
+        .replaceAll(",", ";")
+        .trim();
     });
 };
 
