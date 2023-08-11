@@ -168,7 +168,11 @@ function copyToClipboard(text) {
 }
 
 copyBtn.onclick = () => {
+  copyBtn.innerText = "Copied";
   copyToClipboard(root);
+  setTimeout(() => {
+    copyBtn.innerText = "Copy";
+  }, 2000);
 };
 
 sendBtn.onclick = () => {
