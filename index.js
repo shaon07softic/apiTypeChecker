@@ -203,7 +203,7 @@ sendBtn.onclick = () => {
       //     .replaceAll('"', "")
       //     .replaceAll(",", ";")
       // );
-      root.innerText = getDataType(json);
+      root.innerText = getDataType(!!json.total ? json.data : json)+checkPagination;
     });
 };
 
