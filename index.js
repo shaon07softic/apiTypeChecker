@@ -100,7 +100,10 @@ function getArrayValueTypes(array, check) {
     arrayValueTypes.push(valueType);
   }
 
-  return check ? arrayValueTypes : arrayValueTypes[0];
+  return check ? arrayValueTypes : JSON.stringify(arrayValueTypes[0], null, 10)
+  .replaceAll('"', "")
+  .replaceAll(",", ";")
+  .trim()+"[]";
 }
 
 const handleTypeOf = (data) => {
@@ -180,9 +183,7 @@ sendBtn.onclick = () => {
       CodeMirror(document.querySelector("#my-div"), {
         lineNumbers: true,
         tabSize: 2,
-        value: JSON.stringify(getDataType(json), null, 2)
-        .replaceAll('"', "")
-        .replaceAll(",", ";"),
+        value: getDataType(json),
         mode: 'javascript',
       theme: 'monokai'
       });
@@ -193,15 +194,13 @@ sendBtn.onclick = () => {
       // document.getElementById("my-div").innerText = JSON.parse(dd);
 
       // version 1
+      console.log(getDataType(json)+"[]");
       // console.log(
-      //   JSON.stringify(getDataType(json), null, 2)
+      //   JSON.stringify(getDataType(json, true), null, 2)
       //     .replaceAll('"', "")
       //     .replaceAll(",", ";")
       // );
-      root.innerText = JSON.stringify(getDataType(json), null, 10)
-        .replaceAll('"', "")
-        .replaceAll(",", ";")
-        .trim();
+      root.innerText = getDataType(json);
     });
 };
 
