@@ -179,11 +179,12 @@ sendBtn.onclick = () => {
     .then((json) => {
       rootWrapper.style.display = "block";
       sendBtn.innerText = "Send";
+      const checkPagination =!!json.total ? "":"";
 
       CodeMirror(document.querySelector("#my-div"), {
         lineNumbers: true,
         tabSize: 2,
-        value: getDataType(json),
+        value: getDataType(!!json.total ? json.data : json)+checkPagination,
         mode: 'javascript',
       theme: 'monokai'
       });
@@ -193,8 +194,10 @@ sendBtn.onclick = () => {
       // console.log(JSON.stringify(getTypes(json), null, 2));
       // document.getElementById("my-div").innerText = JSON.parse(dd);
 
+      
+
       // version 1
-      console.log(getDataType(json)+"[]");
+      console.log(getDataType(!!json.total ? json.data : json)+checkPagination);
       // console.log(
       //   JSON.stringify(getDataType(json, true), null, 2)
       //     .replaceAll('"', "")
