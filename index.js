@@ -7,6 +7,9 @@ const selectBox = document.getElementById("selectBox");
 const mainUrl = document.getElementById("mainUrl");
 const authKey = document.getElementById("authKey");
 const payload = document.getElementById("payload");
+const loading = document.getElementById("loading");
+
+let isLoading = false;
 
 hideBtn.onclick = () => {
   rootWrapper.style.display = "none";
@@ -14,16 +17,16 @@ hideBtn.onclick = () => {
 
 sendBtn.onclick = () => {
   rootWrapper.style.display = "block";
+  loading.innerText = "..."
 };
 
 selectBox.onchange = (event) => {
   selectBox.value = event.target.value;
 };
 
-
 mainUrl.onchange = (event) => {
   apiEndPoint = event.target.value;
-}
+};
 
 const defaultEndPoint = mainUrl.value || "https://myfakeapi.com/api/users/"; // dummy object data structure
 const payloadData = {
@@ -93,7 +96,6 @@ function getArrayValueTypes(array, check) {
   for (const value of array) {
     const valueType = typeof value;
     if (valueType === "object" && !Array.isArray(valueType)) {
-      console.log(getObjectPropertyTypes(value));
       arrayValueTypes.push(getObjectPropertyTypes(value));
     }
     arrayValueTypes.push(valueType);
@@ -154,8 +156,20 @@ const getTypes = (data, withkey = true) => {
   return types;
 };
 
+function copyToClipboard(text) {
+  var copyText = text.innerText;
+    navigator.clipboard.writeText(copyText).then(() => {
+        // Alert the user that the action took place.
+        // Nobody likes hidden stuff being done under the hood!
+        // alert("Copied to clipboard");
+    });
+}
+
+copyBtn.onclick = () => {
+  copyToClipboard(root);
+};
+
 sendBtn.onclick = () => {
-  
   fetch(mainUrl.value || defaultEndPoint, payloadData)
     .then((response) => response.json())
     .then((json) => {
@@ -168,12 +182,14 @@ sendBtn.onclick = () => {
 
       // version 1
       console.log(
-        JSON.stringify(getDataType(json), null, 2).replaceAll('"', "").replaceAll(",",";")
+        JSON.stringify(getDataType(json), null, 2)
+          .replaceAll('"', "")
+          .replaceAll(",", ";")
       );
-      root.innerText = JSON.stringify(getDataType(json), null, 10).replaceAll(
-        '"',
-        ""
-      ).replaceAll(",",";").trim();
+      root.innerText = JSON.stringify(getDataType(json), null, 10)
+        .replaceAll('"', "")
+        .replaceAll(",", ";")
+        .trim();
     });
 };
 
