@@ -7,7 +7,6 @@ const selectBox = document.getElementById("selectBox");
 const mainUrl = document.getElementById("mainUrl");
 const authKey = document.getElementById("authKey");
 const payload = document.getElementById("payload");
-const loading = document.getElementById("loading");
 
 let isLoading = false;
 
@@ -17,7 +16,7 @@ hideBtn.onclick = () => {
 
 sendBtn.onclick = () => {
   rootWrapper.style.display = "block";
-  loading.innerText = "..."
+  
 };
 
 selectBox.onchange = (event) => {
@@ -28,7 +27,7 @@ mainUrl.onchange = (event) => {
   apiEndPoint = event.target.value;
 };
 
-const defaultEndPoint = mainUrl.value || "https://myfakeapi.com/api/users/"; // dummy object data structure
+const defaultEndPoint = mainUrl.value || "https://jsonplaceholder.typicode.com/users"; // dummy object data structure
 const payloadData = {
   method: selectBox.value || "GET",
   headers: {
@@ -170,10 +169,14 @@ copyBtn.onclick = () => {
 };
 
 sendBtn.onclick = () => {
+  sendBtn.innerText = "Sending";
+
+
   fetch(mainUrl.value || defaultEndPoint, payloadData)
     .then((response) => response.json())
     .then((json) => {
       rootWrapper.style.display = "block";
+      sendBtn.innerText = "Send";
 
       // version 2
       // const dd = JSON.stringify(getTypes(json));
