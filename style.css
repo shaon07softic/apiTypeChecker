@@ -17,6 +17,18 @@
   z-index: 999;
 }
 
+.user-title {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.main-border {
+  border-bottom: 1px solid #fcba28;
+}
+.footer-border {
+  border-top: 1px solid #fcba28;
+}
+
 #my-div {
   font-size: 18px;
 }

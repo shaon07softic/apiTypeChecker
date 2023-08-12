@@ -9,8 +9,7 @@ const mainUrl = document.getElementById("mainUrl");
 const authKey = document.getElementById("authKey");
 const payload = document.getElementById("payload");
 
-console.log(authKey)
-
+console.log(authKey);
 
 const defaultEndPoint =
   mainUrl.value || "https://jsonplaceholder.typicode.com/users"; // dummy object data structure
@@ -22,7 +21,7 @@ const payloadData = {
   },
 };
 
-if(payloadData.method !== "GET") {
+if (payloadData.method !== "GET") {
   payloadData.body = JSON.stringify(payload.value);
 }
 
@@ -37,8 +36,8 @@ sendBtn.onclick = () => {
 
 selectBox.onchange = (event) => {
   method = event.target.value;
-  payloadData.method = event.target.value
-  console.log(payloadData)
+  payloadData.method = event.target.value;
+  console.log(payloadData);
 };
 
 mainUrl.onchange = (event) => {
@@ -79,7 +78,7 @@ const textobj = {
 const array = ["1", 2, "3", { name: "ss", age: 1 }, true];
 
 // validate the object props
-function getObjectPropertyTypes(obj, check,checkMainDataType) {
+function getObjectPropertyTypes(obj, check, checkMainDataType) {
   const propertyTypes = {};
 
   for (const property in obj) {
@@ -90,21 +89,25 @@ function getObjectPropertyTypes(obj, check,checkMainDataType) {
       propertyTypes[property] = getObjectPropertyTypes(obj[property]);
     } else if (propertyType === "object" && Array.isArray(obj[property])) {
       if (obj[property].length > 0) {
-        propertyTypes[property] = getArrayValueTypes(obj[property], check,checkMainDataType)
+        propertyTypes[property] = getArrayValueTypes(
+          obj[property],
+          check,
+          checkMainDataType
+        )
           ?.trim()
           ?.replaceAll("\n", " ");
       } else {
-        propertyTypes[property] = checkMainDataType ? "":"[]";
+        propertyTypes[property] = checkMainDataType ? "" : "[]";
       }
-      
+
       //   console.log(propertyTypes[property])
-    } 
+    }
   }
   return propertyTypes;
 }
 
 // validate the arrays props
-function getArrayValueTypes(array, check,checkMainDataType) {
+function getArrayValueTypes(array, check, checkMainDataType) {
   const arrayValueTypes = [];
 
   for (const value of array) {
@@ -121,7 +124,7 @@ function getArrayValueTypes(array, check,checkMainDataType) {
       : JSON.stringify(arrayValueTypes[0], null, 10)
           .replaceAll('"', "")
           .replaceAll(",", ";")
-          .trim() + `${checkMainDataType ? "":"[]"}`;
+          .trim() + `${checkMainDataType ? "" : "[]"}`;
   } else {
     return "[]";
   }
@@ -154,10 +157,10 @@ function getDataType(data, checkAllArray = false, checkMainDataType) {
       return "number";
 
     case "array":
-      return getArrayValueTypes(data, checkAllArray,checkMainDataType);
+      return getArrayValueTypes(data, checkAllArray, checkMainDataType);
 
     case "object":
-      return getObjectPropertyTypes(data, checkAllArray,checkMainDataType);
+      return getObjectPropertyTypes(data, checkAllArray, checkMainDataType);
 
     default:
       break;
@@ -198,14 +201,14 @@ copyBtn.onclick = () => {
 
 sendBtn.onclick = () => {
   sendBtn.innerText = "Sending";
-  payloadData.headers.authorization = authKey.value
+  payloadData.headers.authorization = authKey.value;
 
   fetch(mainUrl.value || defaultEndPoint, payloadData)
     .then((response) => {
-      if(response.ok){
+      if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Failed to send")
+        throw new Error("Failed to send");
       }
     })
     .then((json) => {
@@ -213,14 +216,19 @@ sendBtn.onclick = () => {
       sendBtn.innerText = "Send";
       const checkPagination = !!json.total ? "" : "";
       const checkMainDataType = Array.isArray(json);
-      const mainData = !!json.total ? json.data : checkMainDataType ? json : [json];
+      const mainData = !!json.total
+        ? json.data
+        : checkMainDataType
+        ? json
+        : [json];
 
-      console.log(!checkMainDataType)
+      console.log(!checkMainDataType);
 
-      CodeMirror(document.querySelector("#my-div"), {
+      var editor = CodeMirror(document.querySelector("#my-div"), {
         lineNumbers: true,
         tabSize: 2,
-        value: getDataType(mainData, false, !checkMainDataType) + checkPagination,
+        value:
+          getDataType(mainData, false, !checkMainDataType) + checkPagination,
         mode: "javascript",
         theme: "monokai",
       });
@@ -242,7 +250,8 @@ sendBtn.onclick = () => {
       // );
       root.innerText =
         getDataType(mainData, false, !checkMainDataType) + checkPagination;
-    }).catch((error) => {
+    })
+    .catch((error) => {
       alert(error.message);
       sendBtn.innerText = "Send";
     });
