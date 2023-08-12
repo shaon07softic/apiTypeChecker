@@ -80,7 +80,7 @@ function getObjectPropertyTypes(obj, check) {
     if (propertyType === "object" && !Array.isArray(obj[property])) {
       propertyTypes[property] = getObjectPropertyTypes(obj[property]);
     } else if (propertyType === "object" && Array.isArray(obj[property])) {
-      propertyTypes[property] = getArrayValueTypes(obj[property], check);
+      propertyTypes[property] = getArrayValueTypes(obj[property], check).trim().replaceAll("\n", " ");
       //   console.log(propertyTypes[property])
     }
   }
@@ -100,10 +100,11 @@ function getArrayValueTypes(array, check) {
     arrayValueTypes.push(valueType);
   }
 
-  return check ? arrayValueTypes : JSON.stringify(arrayValueTypes[0], null, 10)
+  return check ? arrayValueTypes :  JSON.stringify(arrayValueTypes[0], null, 10)
   .replaceAll('"', "")
   .replaceAll(",", ";")
   .trim()+"[]";
+
 }
 
 const handleTypeOf = (data) => {
