@@ -9,6 +9,8 @@ const mainUrl = document.getElementById("mainUrl");
 const authKey = document.getElementById("authKey");
 const payload = document.getElementById("payload");
 
+let method = "GET";
+
 hideBtn.onclick = () => {
   rootWrapper.style.display = "none";
   window.location.reload();
@@ -19,7 +21,7 @@ sendBtn.onclick = () => {
 };
 
 selectBox.onchange = (event) => {
-  selectBox.value = event.target.value;
+  method = event.target.value;
 };
 
 mainUrl.onchange = (event) => {
@@ -29,12 +31,18 @@ mainUrl.onchange = (event) => {
 const defaultEndPoint =
   mainUrl.value || "https://jsonplaceholder.typicode.com/users"; // dummy object data structure
 const payloadData = {
-  method: selectBox.value || "GET",
+  method: method,
   headers: {
     "Content-Type": "application/json",
     authorization: authKey.value,
   },
 };
+
+if(method !== "GET") {
+  payloadData.body = JSON.stringify(payload.value);
+}
+
+
 
 const textobj = {
   name: "John Doe",
@@ -191,7 +199,13 @@ sendBtn.onclick = () => {
   sendBtn.innerText = "Sending";
 
   fetch(mainUrl.value || defaultEndPoint, payloadData)
-    .then((response) => response.json())
+    .then((response) => {
+      if(response.ok){
+        return response.json();
+      } else {
+        throw new Error("Failed to send")
+      }
+    })
     .then((json) => {
       rootWrapper.style.display = "block";
       sendBtn.innerText = "Send";
@@ -204,6 +218,7 @@ sendBtn.onclick = () => {
         mode: "javascript",
         theme: "monokai",
       });
+
 
       // version 2
       // const dd = JSON.stringify(getTypes(json));
@@ -221,6 +236,9 @@ sendBtn.onclick = () => {
       // );
       root.innerText =
         getDataType(!!json.total ? json.data : json) + checkPagination;
+    }).catch((error) => {
+      alert(error.message);
+      sendBtn.innerText = "Send";
     });
 };
 
