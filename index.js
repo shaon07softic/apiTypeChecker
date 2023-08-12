@@ -9,9 +9,24 @@ const mainUrl = document.getElementById("mainUrl");
 const authKey = document.getElementById("authKey");
 const payload = document.getElementById("payload");
 
+
+const defaultEndPoint =
+  mainUrl.value || "https://jsonplaceholder.typicode.com/users"; // dummy object data structure
+const payloadData = {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    authorization: authKey.value,
+  },
+};
+
+if(payloadData.method !== "GET") {
+  payloadData.body = JSON.stringify(payload.value);
+}
+
 hideBtn.onclick = () => {
   rootWrapper.style.display = "none";
-  window.location.reload()
+  window.location.reload();
 };
 
 sendBtn.onclick = () => {
@@ -19,21 +34,13 @@ sendBtn.onclick = () => {
 };
 
 selectBox.onchange = (event) => {
-  selectBox.value = event.target.value;
+  method = event.target.value;
+  payloadData.method = event.target.value
+  console.log(payloadData)
 };
 
 mainUrl.onchange = (event) => {
   apiEndPoint = event.target.value;
-};
-
-const defaultEndPoint =
-  mainUrl.value || "https://jsonplaceholder.typicode.com/users"; // dummy object data structure
-const payloadData = {
-  method: selectBox.value || "GET",
-  headers: {
-    "Content-Type": "application/json",
-    authorization: authKey.value,
-  },
 };
 
 const textobj = {
@@ -70,7 +77,7 @@ const textobj = {
 const array = ["1", 2, "3", { name: "ss", age: 1 }, true];
 
 // validate the object props
-function getObjectPropertyTypes(obj, check) {
+function getObjectPropertyTypes(obj, check,checkMainDataType) {
   const propertyTypes = {};
 
   for (const property in obj) {
@@ -80,16 +87,22 @@ function getObjectPropertyTypes(obj, check) {
     if (propertyType === "object" && !Array.isArray(obj[property])) {
       propertyTypes[property] = getObjectPropertyTypes(obj[property]);
     } else if (propertyType === "object" && Array.isArray(obj[property])) {
-      propertyTypes[property] = getArrayValueTypes(obj[property], check);
+      if (obj[property].length > 0) {
+        propertyTypes[property] = getArrayValueTypes(obj[property], check,checkMainDataType)
+          ?.trim()
+          ?.replaceAll("\n", " ");
+      } else {
+        propertyTypes[property] = checkMainDataType ? "":"[]";
+      }
+      
       //   console.log(propertyTypes[property])
-    }
+    } 
   }
-
   return propertyTypes;
 }
 
 // validate the arrays props
-function getArrayValueTypes(array, check) {
+function getArrayValueTypes(array, check,checkMainDataType) {
   const arrayValueTypes = [];
 
   for (const value of array) {
@@ -100,10 +113,16 @@ function getArrayValueTypes(array, check) {
     arrayValueTypes.push(valueType);
   }
 
-  return check ? arrayValueTypes : JSON.stringify(arrayValueTypes[0], null, 10)
-  .replaceAll('"', "")
-  .replaceAll(",", ";")
-  .trim()+"[]";
+  if (arrayValueTypes.length > 0) {
+    return check
+      ? arrayValueTypes
+      : JSON.stringify(arrayValueTypes[0], null, 10)
+          .replaceAll('"', "")
+          .replaceAll(",", ";")
+          .trim() + `${checkMainDataType ? "":"[]"}`;
+  } else {
+    return "[]";
+  }
 }
 
 const handleTypeOf = (data) => {
@@ -120,7 +139,7 @@ const handleTypeOf = (data) => {
   }
 };
 
-function getDataType(data, checkAllArray = false) {
+function getDataType(data, checkAllArray = false, checkMainDataType) {
   let check = checkAllArray;
   switch (handleTypeOf(data)) {
     case "string":
@@ -133,10 +152,10 @@ function getDataType(data, checkAllArray = false) {
       return "number";
 
     case "array":
-      return getArrayValueTypes(data, checkAllArray);
+      return getArrayValueTypes(data, checkAllArray,checkMainDataType);
 
     case "object":
-      return getObjectPropertyTypes(data, checkAllArray);
+      return getObjectPropertyTypes(data, checkAllArray,checkMainDataType);
 
     default:
       break;
@@ -179,37 +198,49 @@ sendBtn.onclick = () => {
   sendBtn.innerText = "Sending";
 
   fetch(mainUrl.value || defaultEndPoint, payloadData)
-    .then((response) => response.json())
+    .then((response) => {
+      if(response.ok){
+        return response.json();
+      } else {
+        throw new Error("Failed to send")
+      }
+    })
     .then((json) => {
       rootWrapper.style.display = "block";
       sendBtn.innerText = "Send";
-      const checkPagination =!!json.total ? "":"";
+      const checkPagination = !!json.total ? "" : "";
+      const checkMainDataType = Array.isArray(json);
+      const mainData = !!json.total ? json.data : checkMainDataType ? json : [json];
+
+      console.log(!checkMainDataType)
 
       CodeMirror(document.querySelector("#my-div"), {
         lineNumbers: true,
         tabSize: 2,
-        value: getDataType(!!json.total ? json.data : json)+checkPagination,
-        mode: 'javascript',
-      theme: 'monokai'
+        value: getDataType(mainData, false, !checkMainDataType) + checkPagination,
+        mode: "javascript",
+        theme: "monokai",
       });
+
 
       // version 2
       // const dd = JSON.stringify(getTypes(json));
       // console.log(JSON.stringify(getTypes(json), null, 2));
       // document.getElementById("my-div").innerText = JSON.parse(dd);
 
-      
-
       // version 1
-      console.log(getDataType(!!json.total ? json.data : json)+checkPagination);
+      console.log(
+        getDataType(mainData, false, !checkMainDataType) + checkPagination
+      );
       // console.log(
       //   JSON.stringify(getDataType(json, true), null, 2)
       //     .replaceAll('"', "")
       //     .replaceAll(",", ";")
       // );
-      root.innerText = getDataType(!!json.total ? json.data : json)+checkPagination;
+      root.innerText =
+        getDataType(mainData, false, !checkMainDataType) + checkPagination;
     }).catch((error) => {
-      alert("failed to fetch", error.message);
+      alert(error.message);
       sendBtn.innerText = "Send";
     });
 };

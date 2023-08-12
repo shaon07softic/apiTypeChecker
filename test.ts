@@ -1,7 +1,8 @@
 type test = {
   id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
+  title: string;
+  content: string;
+  category: { id: number };
+  status: string;
+  createdAt: string;
 }[];
