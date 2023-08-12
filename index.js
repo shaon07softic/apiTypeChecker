@@ -9,6 +9,8 @@ const mainUrl = document.getElementById("mainUrl");
 const authKey = document.getElementById("authKey");
 const payload = document.getElementById("payload");
 
+console.log(authKey)
+
 
 const defaultEndPoint =
   mainUrl.value || "https://jsonplaceholder.typicode.com/users"; // dummy object data structure
@@ -196,6 +198,7 @@ copyBtn.onclick = () => {
 
 sendBtn.onclick = () => {
   sendBtn.innerText = "Sending";
+  payloadData.headers.authorization = authKey.value
 
   fetch(mainUrl.value || defaultEndPoint, payloadData)
     .then((response) => {
