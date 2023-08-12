@@ -208,6 +208,9 @@ sendBtn.onclick = () => {
       //     .replaceAll(",", ";")
       // );
       root.innerText = getDataType(!!json.total ? json.data : json)+checkPagination;
+    }).catch((error) => {
+      alert("failed to fetch", error.message);
+      sendBtn.innerText = "Send";
     });
 };
 
