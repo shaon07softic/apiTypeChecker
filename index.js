@@ -80,7 +80,11 @@ function getObjectPropertyTypes(obj, check) {
     if (propertyType === "object" && !Array.isArray(obj[property])) {
       propertyTypes[property] = getObjectPropertyTypes(obj[property]);
     } else if (propertyType === "object" && Array.isArray(obj[property])) {
-      propertyTypes[property] = getArrayValueTypes(obj[property], check).trim().replaceAll("\n", " ");
+      if(obj[property].length > 0){
+        propertyTypes[property] = getArrayValueTypes(obj[property], check)?.trim()?.replaceAll("\n", " ");
+      } else {
+        propertyTypes[property] = "[]"
+      }
       //   console.log(propertyTypes[property])
     }
   }
