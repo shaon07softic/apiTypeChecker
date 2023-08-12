@@ -1,35 +1,8 @@
 type test = {
   id: number;
   title: string;
-  slug: string;
   content: string;
-  hit: number;
-  topic_id: number;
-  user: { id: number };
-  categories: [];
+  category: { id: number };
+  status: string;
   createdAt: string;
-  dates: string[];
-  names: string[];
-  lottery: number[];
-  thumbnail: {
-    url: string;
-    name: string;
-    status: string;
-    type: string;
-    uid: string;
-  };
-  avatar: string;
-  images: [];
-  thumbnails: string[];
-  website: string;
-  socials: string[];
-  email: string;
-  emails: [];
-  consent: boolean;
-  checks: boolean[];
-  tags: number[];
-  additional: { title: string; content: string; id: number };
-  additionals: { title: string; content: string; id: number }[];
-  unknown_field: { someProperty: string; someOtherProperty: string };
-  unknown_fields: { someProperty: string; someOtherProperty: string }[];
 }[];

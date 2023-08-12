@@ -11,7 +11,7 @@ const payload = document.getElementById("payload");
 
 hideBtn.onclick = () => {
   rootWrapper.style.display = "none";
-  window.location.reload()
+  window.location.reload();
 };
 
 sendBtn.onclick = () => {
@@ -80,10 +80,12 @@ function getObjectPropertyTypes(obj, check) {
     if (propertyType === "object" && !Array.isArray(obj[property])) {
       propertyTypes[property] = getObjectPropertyTypes(obj[property]);
     } else if (propertyType === "object" && Array.isArray(obj[property])) {
-      if(obj[property].length > 0){
-        propertyTypes[property] = getArrayValueTypes(obj[property], check)?.trim()?.replaceAll("\n", " ");
+      if (obj[property].length > 0) {
+        propertyTypes[property] = getArrayValueTypes(obj[property], check)
+          ?.trim()
+          ?.replaceAll("\n", " ");
       } else {
-        propertyTypes[property] = "[]"
+        propertyTypes[property] = "[]";
       }
       //   console.log(propertyTypes[property])
     }
@@ -104,11 +106,16 @@ function getArrayValueTypes(array, check) {
     arrayValueTypes.push(valueType);
   }
 
-  return check ? arrayValueTypes :  JSON.stringify(arrayValueTypes[0], null, 10)
-  .replaceAll('"', "")
-  .replaceAll(",", ";")
-  .trim()+"[]";
-
+  if (arrayValueTypes.length > 0) {
+    return check
+      ? arrayValueTypes
+      : JSON.stringify(arrayValueTypes[0], null, 10)
+          .replaceAll('"', "")
+          .replaceAll(",", ";")
+          .trim() + "[]";
+  } else {
+    return "[]";
+  }
 }
 
 const handleTypeOf = (data) => {
@@ -188,14 +195,14 @@ sendBtn.onclick = () => {
     .then((json) => {
       rootWrapper.style.display = "block";
       sendBtn.innerText = "Send";
-      const checkPagination =!!json.total ? "":"";
+      const checkPagination = !!json.total ? "" : "";
 
       CodeMirror(document.querySelector("#my-div"), {
         lineNumbers: true,
         tabSize: 2,
-        value: getDataType(!!json.total ? json.data : json)+checkPagination,
-        mode: 'javascript',
-      theme: 'monokai'
+        value: getDataType(!!json.total ? json.data : json) + checkPagination,
+        mode: "javascript",
+        theme: "monokai",
       });
 
       // version 2
@@ -203,16 +210,17 @@ sendBtn.onclick = () => {
       // console.log(JSON.stringify(getTypes(json), null, 2));
       // document.getElementById("my-div").innerText = JSON.parse(dd);
 
-      
-
       // version 1
-      console.log(getDataType(!!json.total ? json.data : json)+checkPagination);
+      console.log(
+        getDataType(!!json.total ? json.data : json) + checkPagination
+      );
       // console.log(
       //   JSON.stringify(getDataType(json, true), null, 2)
       //     .replaceAll('"', "")
       //     .replaceAll(",", ";")
       // );
-      root.innerText = getDataType(!!json.total ? json.data : json)+checkPagination;
+      root.innerText =
+        getDataType(!!json.total ? json.data : json) + checkPagination;
     });
 };
 
