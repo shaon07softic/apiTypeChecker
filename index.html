@@ -28,182 +28,181 @@
     />
   </head>
   <body>
-    <div class="container-fluid main-border">
-      <div class="container py-3">
-        <nav class="navbar bg-body-tertiary">
-          <div class="container-fluid d-flex">
-            <a class="navbar-brand" href="#">
-              <!-- src="https://i.ibb.co/K5pRQtH/postman-seeklogo-com.png" -->
-              <img
-                src="https://ui.dev/images/typescript-logo.svg"
-                alt="Logo"
-                width="30"
-                height="24"
-                class="d-inline-block align-text-top"
-              />
-              <span class="text-white">IoDean</span>
-            </a>
+    <div class="d-flex flex-column justify-content-between" style="height: 100vh">
+      <div>
+        <div class="container-fluid main-border">
+          <div class="container py-3">
+            <nav class="navbar bg-body-tertiary">
+              <div class="container-fluid d-flex">
+                <a class="navbar-brand" href="#">
+                  <!-- src="https://i.ibb.co/K5pRQtH/postman-seeklogo-com.png" -->
+                  <img
+                    src="https://ui.dev/images/typescript-logo.svg"
+                    alt="Logo"
+                    width="30"
+                    height="24"
+                    class="d-inline-block align-text-top"
+                  />
+                  <span class="text-white">IoDean</span>
+                </a>
 
-            <div>
-              <a
-                href="https://github.com/shaon07/apiTypeChecker"
-                class="text-white"
-                target="_blank"
-              >
-                <img
-                  src="https://seeklogo.com/images/G/github-logo-2E3852456C-seeklogo.com.png"
-                  alt="github"
-                  width="30"
-                  height="30"
-                />
-              </a>
-            </div>
+                <div>
+                  <a
+                    href="https://github.com/shaon07/apiTypeChecker"
+                    class="text-white"
+                    target="_blank"
+                  >
+                    <img
+                      src="https://seeklogo.com/images/G/github-logo-2E3852456C-seeklogo.com.png"
+                      alt="github"
+                      width="30"
+                      height="30"
+                    />
+                  </a>
+                </div>
+              </div>
+            </nav>
           </div>
-        </nav>
-      </div>
-    </div>
-    <div class="container p-5">
-      <!-- search bar section -->
-      <div class="input-group mb-3">
-        <select
-          class="form-select selectBox"
-          aria-label="Default select example"
-          id="selectBox"
-        >
-          <option value="GET">GET</option>
-          <option value="POST">POST</option>
-          <option value="PUT">PUT</option>
-          <option value="DELETE">DELETE</option>
-        </select>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="URL"
-          aria-label="Recipient's username"
-          id="mainUrl"
-          aria-describedby="button-addon2"
-        />
-        <button class="btn btn-outline-info" type="button" id="sendBtn">
-          Send
-        </button>
-      </div>
-
-      <div class="position-relative" id="root-wrapper">
-        <div id="my-div"></div>
-        <pre id="root" class="d-none"></pre>
-        <div class="copy-btn position-absolute d-flex gap-1">
-          <button class="btn btn-primary" id="copyBtn">copy</button>
-          <button class="btn btn-primary" id="hideBtn">clear</button>
         </div>
-      </div>
-
-      <!-- method list section -->
-      <!-- <div class="method-list">
-        <ul class="d-flex justify-items-center gap-2">
-          <li>Authorization</li>
-          <li>Body</li>
-        </ul>
-      </div> -->
-
-      <!-- authorization input-box -->
-      <div class="mb-3 mt-1">
-        <label for="basic-url" class="form-label">Authorization Key</label>
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon1">Authorization</span>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Bearer"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-            id="authKey"
-          />
-        </div>
-      </div>
-
-      <div class="input-group d-flex flex-column">
-        <label for="basic-url" class="form-label">Add Payload</label>
-        <textarea
-          class="form-control w-100 text-area"
-          aria-label="With textarea"
-          id="payload"
-        ></textarea>
-      </div>
-    </div>
-
-    <!-- <textarea id="root"></textarea> -->
-
-    <div class="container-fluid footer-border">
-      <div class="container py-3">
-        <footer class="navbar bg-body-tertiary">
-          <div class="container-fluid d-flex">
-            <a
-              class="navbar-brand d-flex flex-column align-items-center"
-              href="#"
+        <div class="container p-5">
+          <!-- search bar section -->
+          <div class="input-group mb-3">
+            <select
+              class="form-select selectBox"
+              aria-label="Default select example"
+              id="selectBox"
             >
-              <!-- src="https://i.ibb.co/K5pRQtH/postman-seeklogo-com.png" -->
-              <img
-                src="https://ui.dev/images/typescript-logo.svg"
-                alt="Logo"
-                width="30"
-                height="24"
-                class="d-inline-block align-text-top"
-              />
-              <span class="text-white copyright">Copyright: IoDean</span>
-            </a>
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="URL"
+              aria-label="Recipient's username"
+              id="mainUrl"
+              aria-describedby="button-addon2"
+            />
+            <button class="btn btn-outline-info" type="button" id="sendBtn">Send</button>
+          </div>
 
-            <div class="d-flex gap-2 justify-items-center">
-              <div>
-                <a
-                  href="https://github.com/shaon07softic"
-                  class="text-white d-flex flex-column align-items-center"
-                  target="_blank"
-                >
-                  <img
-                    src="https://avatars.githubusercontent.com/u/121743010?v=4"
-                    alt="github"
-                    width="30"
-                    height="30"
-                    class="rounded-pill"
-                  />
-                  <span class="user-title">shaon07softic</span>
-                </a>
-              </div>
-              <div>
-                <a
-                  href="https://github.com/shaon07"
-                  class="text-white d-flex flex-column align-items-center"
-                  target="_blank"
-                >
-                  <img
-                    src="https://avatars.githubusercontent.com/u/59138405?v=4"
-                    alt="github"
-                    width="30"
-                    height="30"
-                    class="rounded-pill"
-                  />
-                  <span class="user-title">Shaon07</span>
-                </a>
-              </div>
-              <div>
-                <a
-                  href="https://avatars.githubusercontent.com/u/59138405?v=4"
-                  class="text-white d-flex flex-column align-items-center"
-                  target="_blank"
-                >
-                  <img
-                    src="https://avatars.githubusercontent.com/u/65497148?v=4"
-                    alt="github"
-                    width="30"
-                    height="30"
-                    class="rounded-pill"
-                  />
-                  <span class="user-title">nahidnfr123</span>
-                </a>
-              </div>
+          <div class="position-relative" id="root-wrapper">
+            <div id="my-div"></div>
+            <pre id="root" class="d-none"></pre>
+            <div class="copy-btn position-absolute d-flex gap-1">
+              <button class="btn btn-primary" id="copyBtn">copy</button>
+              <button class="btn btn-primary" id="hideBtn">clear</button>
             </div>
           </div>
-        </footer>
+
+          <!-- method list section -->
+          <!-- <div class="method-list">
+            <ul class="d-flex justify-items-center gap-2">
+              <li>Authorization</li>
+              <li>Body</li>
+            </ul>
+          </div> -->
+
+          <!-- authorization input-box -->
+          <div class="mb-3 mt-1">
+            <label for="basic-url" class="form-label">Authorization Key</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">Authorization</span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Bearer"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+                id="authKey"
+              />
+            </div>
+          </div>
+
+          <div class="input-group d-flex flex-column">
+            <label for="basic-url" class="form-label">Add Payload</label>
+            <textarea
+              class="form-control w-100 text-area"
+              aria-label="With textarea"
+              id="payload"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- <textarea id="root"></textarea> -->
+
+      <div class="container-fluid footer-border">
+        <div class="container py-3">
+          <footer class="navbar bg-body-tertiary">
+            <div class="container-fluid d-flex">
+              <a class="navbar-brand d-flex flex-column align-items-center" href="#">
+                <!-- src="https://i.ibb.co/K5pRQtH/postman-seeklogo-com.png" -->
+                <img
+                  src="https://ui.dev/images/typescript-logo.svg"
+                  alt="Logo"
+                  width="30"
+                  height="24"
+                  class="d-inline-block align-text-top"
+                />
+                <span class="text-white copyright">Copyright: IoDean</span>
+              </a>
+
+              <div class="d-flex gap-2 justify-items-center">
+                <div>
+                  <a
+                    href="https://github.com/shaon07softic"
+                    class="text-white d-flex flex-column align-items-center"
+                    target="_blank"
+                  >
+                    <img
+                      src="https://avatars.githubusercontent.com/u/121743010?v=4"
+                      alt="github"
+                      width="30"
+                      height="30"
+                      class="rounded-pill"
+                    />
+                    <span class="user-title">shaon07softic</span>
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="https://github.com/shaon07"
+                    class="text-white d-flex flex-column align-items-center"
+                    target="_blank"
+                  >
+                    <img
+                      src="https://avatars.githubusercontent.com/u/59138405?v=4"
+                      alt="github"
+                      width="30"
+                      height="30"
+                      class="rounded-pill"
+                    />
+                    <span class="user-title">Shaon07</span>
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="https://avatars.githubusercontent.com/u/59138405?v=4"
+                    class="text-white d-flex flex-column align-items-center"
+                    target="_blank"
+                  >
+                    <img
+                      src="https://avatars.githubusercontent.com/u/65497148?v=4"
+                      alt="github"
+                      width="30"
+                      height="30"
+                      class="rounded-pill"
+                    />
+                    <span class="user-title">nahidnfr123</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
       </div>
     </div>
   </body>

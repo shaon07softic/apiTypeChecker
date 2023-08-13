@@ -13,7 +13,7 @@
 }
 .copy-btn {
   top: 1rem;
-  right: 1rem;
+  right: 2rem;
   z-index: 999;
 }
 
@@ -61,5 +61,5 @@ label {
 }
 
 .text-area {
-  min-height: 10rem !important;
+  min-height: 15rem !important;
 }
